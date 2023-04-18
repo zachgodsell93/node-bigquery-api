@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "noUnusedLocals": false,
+    "target": "ES6",                                  
+    "lib": ["es6"],                                      
+    "module": "commonjs",                              
+    "rootDir": "./src",                                   
+    "resolveJsonModule": true,                           
+    "allowJs": true,                                     
+    "outDir": "build",                                   
+    "esModuleInterop": true,                                                  
+    "forceConsistentCasingInFileNames": true,           
+    "strict": true,                                      
+    "noImplicitAny": true,                                
+    "skipLibCheck": true                                  
+  }
+}
