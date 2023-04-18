@@ -4,14 +4,14 @@ import { UserController } from "../controllers/UserController";
 const userRouter = express.Router();
 const userController = new UserController();
 
-userRouter.get("/", (req, res) => {
-	const users = userController.getUsers();
+userRouter.get("/", async (req, res) => {
+	const users = await userController.getUsers();
 	res.json(users);
 });
 
-userRouter.get("/:id", (req, res) => {
+userRouter.get("/:id", async (req, res) => {
 	const userId = parseInt(req.params.id);
-	const user = userController.getUserById(userId); // Fixed typo here
+	const user = await userController.getUserById(userId); // Fixed typo here
 	if (user) {
 		res.json(user);
 	} else {

@@ -5,17 +5,21 @@ export class UserController {
 	private bigquery: BigQuery;
 
 	constructor() {
-		this.bigquery = new BigQuery();
+		this.bigquery = new BigQuery({
+			projectId: "portfolio-384112",
+			keyFilename:
+				"/home/dojodev/.config/gcloud/application_default_credentials.json",
+		});
 	}
 	async getUsers(): Promise<User[]> {
 		const query = "SELECT *  FROM `portfolio-384112.users.userData` LIMIT 1000";
 		const [rows] = await this.bigquery.query(query);
-
+		console.log(rows);
 		const users = rows.map((row) => {
 			return {
 				id: row.id,
-				firstName: row.first_name,
-				lastName: row.last_name,
+				firstName: row.firstName,
+				lastName: row.lastName,
 				email: row.email,
 				age: row.age,
 			};
@@ -25,7 +29,7 @@ export class UserController {
 	}
 
 	async getUserById(id: number): Promise<User | null> {
-		const query = `SELECT * FROM \`your_project_id.your_dataset_id.users\` WHERE id = ${id}`; // Update with your own project ID, dataset ID, and table name
+		const query = `SELECT * FROM \`portfolio-384112.users.userData\` WHERE id = ${id}`; // Update with your own project ID, dataset ID, and table name
 		const [rows] = await this.bigquery.query(query);
 
 		// If no rows are returned, return null
@@ -37,11 +41,12 @@ export class UserController {
 		const row = rows[0];
 		const user: User = {
 			id: row.id,
-			firstName: row.first_name,
-			lastName: row.last_name,
+			firstName: row.firstName,
+			lastName: row.lastName,
 			email: row.email,
 			age: row.age,
 		};
+		console.log(user);
 
 		return user;
 	}

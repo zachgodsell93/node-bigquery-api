@@ -5,14 +5,24 @@ export class PageviewsController {
 	private bigquery: BigQuery;
 
 	constructor() {
-		this.bigquery = new BigQuery();
+		this.bigquery = new BigQuery({
+			projectId: "portfolio-384112",
+			keyFilename:
+				"/home/dojodev/.config/gcloud/application_default_credentials.json",
+		});
 	}
 	async getPageViews(): Promise<Pageviews[]> {
-		const query = "";
+		const query =
+			"SELECT visitId, date, totals.visits, geoNetwork FROM `portfolio-384112.ga_test.ga_sessions_20170801` LIMIT 5";
 		const [rows] = await this.bigquery.query(query);
 
 		const pageviews = rows.map((row) => {
-			return {};
+			return {
+				visitId: row.visitId,
+				date: row.date,
+				visits: row.visits,
+				geoNetwork: row.geoNetwork,
+			};
 		});
 
 		return pageviews;
